@@ -1,0 +1,13 @@
+{
+  "name": "Cartographer's Apprentice",
+  "short_name": "Cartographer",
+  "description": "Not a quiz: a geography deduction game. Clients bring fragments of the world; you deduce the place, plot the expedition, and fill your atlas.",
+  "id": "./", "start_url": "./", "scope": "./", "display": "standalone", "orientation": "portrait",
+  "background_color": "#f3ead8", "theme_color": "#f3ead8", "categories": ["games", "education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [ { "src": "icons/screenshot-portrait.png", "sizes": "720x1280", "type": "image/png", "form_factor": "narrow" } ]
+}
