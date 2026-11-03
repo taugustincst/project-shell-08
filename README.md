@@ -1,9 +1,9 @@
-# project-shell-08
+# Cartographer's Apprentice
 
-**Shell repository for a future Claude project.**
+**Adult geography as a deduction game — not a quiz.** Clients bring partial evidence: a coastline fragment, the language on a sign, a sun angle, a railway gauge, a flag glimpsed wrong. You deduce the place, plot the expedition, and fill your atlas. You finish this game actually knowing the map of the world.
 
-This repo is an empty shell created on 2026-10-29 at Tj's direction. It has no project yet — it exists so that when a project is assigned, the repo, its conventions, and its handoff are already in place.
+Free on Google Play with a one-time $2.99 unlock. No ads, no consumables, fully offline.
 
-Start with [HANDOFF.md](HANDOFF.md): it explains what this shell is, who works here, and how the project gets defined.
+Status: ASSIGNED 2026-11-02 — build brief is in [HANDOFF.md](HANDOFF.md). Flagged CAUTIOUS pick in the research: it builds audience, not revenue. Repo rename at ship time (Tj's call).
 
 Owner: Tj (Taylor Augustin) / AugustInnovations LLC.
