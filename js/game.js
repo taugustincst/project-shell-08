@@ -1,10 +1,12 @@
 /* Cartographer's Apprentice — UI, save, test API. Numbers live in engine.js. */
 (function () {
 'use strict';
-const E = window.CA, D = E.D, W = E.W, B = window.KTL_BILLING;
+const E = window.CA, D = E.D, W = E.W, B = window.CA_BILLING;
 const VERSION = '1.0.0', SAVE_KEY = 'cartographer.v1', ATLAS_KEY = 'cartographer.v1.atlas', BACKUP_KEY = 'cartographer.v1.backup';
 const $ = id => document.getElementById(id);
-const DEV = new URLSearchParams(location.search).get('dev') === '1';
+// ?dev=1 makes unlocking free for testing. Only on a local copy: the Play app opens the public site, and
+// the free unlock would otherwise be one link away for anyone and saved on their phone.
+const DEV = new URLSearchParams(location.search).get('dev') === '1' && ['localhost', '127.0.0.1', ''].includes(location.hostname);
 let S = null, profile = null;
 const TYPE_NAMES = { coast: 'Coast', lang: 'Sign', sun: 'Sun', gauge: 'Rails', currency: 'Coin', flag: 'Flag', drive: 'Road', wild: 'Wild' };
 

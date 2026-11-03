@@ -34,6 +34,6 @@ Game · Educational (or Trivia). Tags: geography, countries, flags, capitals, de
 ## Declarations (to confirm in Console)
 - IARC: no violence, no gambling, no user interaction, no ads; one non-consumable in-app purchase.
 - Target audience 13+ (13-15, 16-17, 18+). Not designed for children.
-- Data safety: no data collected, no data shared. Privacy policy at the repo's Pages site, privacy.html. Contact elderon@augustinnovations.io.
+- Data safety (Play edition): collects one data type, shares nothing. Financial info > Purchase history: collected yes, shared no, processed ephemerally yes, required, purpose App functionality. After a purchase the game sends the package name, product ID and Play purchase token over HTTPS to the acknowledgement service (the one in the fftremake repository's ack-endpoint folder), which checks it with Google Play and acknowledges it; nothing is kept on the server. Encrypted in transit: yes. Deletion: nothing is kept on the server; progress is removed by uninstalling or clearing the app's data. Privacy policy at the repo's Pages site, privacy.html. Contact elderon@augustinnovations.io.
 - In-app product: `full_unlock`, non-consumable, $2.99, title "The whole world", description "Opens Africa, Asia and Oceania, ranks three to five, and the prestige commissions."
 - Apply to Play Pass after launch.

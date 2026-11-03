@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: 22
       - run: node tests/engine.test.js
+      - run: node tests/billing.test.js
       - run: node tools/validate.js
       - run: node sim/sim.js 300 7
       - run: npm install --no-audit --no-fund
