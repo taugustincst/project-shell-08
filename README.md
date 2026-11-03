@@ -2,7 +2,7 @@
 
 **Adult geography as a deduction game, not a quiz.** Clients bring partial evidence: a coastline fragment, the language on a sign, a sun angle, a railway gauge, a coin, a flag glimpsed wrong. You take it to the atlas, find the one land it all fits, plot the expedition, and fill your atlas. You finish the career actually knowing the map of the world.
 
-Free on Google Play with a one-time $2.99 unlock. No ads, no consumables, fully offline. Paid-upfront is forbidden for this title (audience builder, Play Pass candidate).
+A paid download on Google Play: the whole world is in the app, with no in-app purchases. No ads, no consumables, fully offline.
 
 Status: **v1.0.0 draft built 2026-11-03**, not yet submitted. Brief and living log in [HANDOFF.md](HANDOFF.md); build plan in [tasks/todo.md](tasks/todo.md). Repo rename at ship time (Tj's call).
 
@@ -16,7 +16,6 @@ Owner: Tj (Taylor Augustin) / AugustInnovations LLC.
 - **Expeditions**: after each identification, reach the land through a true neighbour (or the right sea for islands) within a league budget.
 - **Career**: five ranks, 8 reference layers and 8 workshop tools to buy, 40 authored prestige commissions contested by three rival workshops, endless generated commissions, and a Master ending when every open land is identified.
 - **Spaced repetition** disguised as returning clients: intervals grow with correct answers and reset on mistakes.
-- **Free apprenticeship**: Europe and the Americas to the rank of Journeyman. `full_unlock` opens Africa, Asia, Oceania, ranks 3–5 and the prestige commissions.
 
 ## Code (no build step, no runtime dependencies)
 | File | What |
@@ -25,7 +24,6 @@ Owner: Tj (Taylor Augustin) / AugustInnovations LLC.
 | `js/data.js` | Language families, currency families, ranks, layers, tools, rivals, 40 prestige commissions. |
 | `js/engine.js` | Pure engine: clue predicates and generators, commission builder, career, spaced repetition, routes, save sanitizer. Runs in Node and the browser. |
 | `js/game.js` | UI, atlas renderer (SVG from data), save (double-written atlas), test API `window.__cartographer`. |
-| `js/billing.js` | Google Play Billing via the Digital Goods API. |
 | `tools/validate.js` | Fairness validator (every clue set resolves to exactly one answer). |
 | `sim/sim.js` | Headless career and spaced-repetition sim across player accuracies. |
 | `tests/engine.test.js`, `tests/smoke.js` | Unit tests; Playwright smoke test over `file://`. |
@@ -35,7 +33,7 @@ node tests/engine.test.js && node tools/validate.js && node sim/sim.js 600 7
 npm install && node tests/smoke.js
 ```
 
-`?dev=1` makes the unlock free for test builds. Saves: `cartographer.v1` (career) and `cartographer.v1.atlas` (atlas backup, restored if the main save is lost).
+Saves: `cartographer.v1` (career) and `cartographer.v1.atlas` (atlas backup, restored if the main save is lost).
 
 ## Publishing
-Trusted Web Activity, the Ironhold pattern; Android project not yet in this repo (see HANDOFF.md). Pages deploys from `main`. Store copy draft: `store/listing.md`.
+A paid app on Google Play with the whole game packed inside it (`android/play`, see `PLAY.md`). Pages deploys only the store page from `main` (`site/index.html`, the privacy policy `privacy.html` and the store graphics), not the playable game. Store copy: `store/listing.md`.

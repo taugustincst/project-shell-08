@@ -24,7 +24,6 @@ const RANKS = [
   { id: 4, name: 'Surveyor', rep: 320, blurb: 'Commissions arrive addressed to you. The master has taken up gardening.' },
   { id: 5, name: 'Master Cartographer', rep: 560, blurb: 'The workshop is yours. Apprentices sharpen your pencils and are allowed, under supervision, to say where a coastline is.' }
 ];
-const FREE_RANK = 2, FREE_CONTINENTS = ['EU', 'NA', 'SA'];
 const LAYERS = [
   { id: 'coast', name: 'Coasts and borders', cost: 0, desc: 'Which seas a land touches, and which lands it touches. The oldest layer in the atlas.' },
   { id: 'lang', name: 'Languages and scripts', cost: 0, desc: 'What is spoken and how it is written. Signs are evidence.' },
@@ -94,6 +93,6 @@ const PRESTIGE = [
   { id: 'p40', target: 'MT', rank: 5, rival: 'vosk', title: 'The George Cross', client: 'A naval chaplain: a white-and-red flag with a medal in the corner, an island with no railway where the carts keep left.', clues: [['flag',1],['gauge',1],['drive',1]] }
 ];
 const CLIENTS = ['a spice merchant', 'a retired admiral', 'a botanist with a pressed leaf', 'a railway engineer', 'a missionary\'s widow', 'a stamp collector', 'a diplomat\'s secretary', 'a shipping clerk', 'a schoolteacher with a globe', 'a newspaper correspondent', 'a tea planter', 'a woman who found a letter in a bottle', 'an opera singer who toured too much', 'a customs officer', 'a cartographer from a rival house, in disguise'];
-const DATA = { LANG_FAMILY, PLANT_WORDS, CUR_FAMILIES, GAUGE_CLASS, RANKS, FREE_RANK, FREE_CONTINENTS, LAYERS, UPGRADES, RIVALS, PRESTIGE, CLIENTS };
+const DATA = { LANG_FAMILY, PLANT_WORDS, CUR_FAMILIES, GAUGE_CLASS, RANKS, LAYERS, UPGRADES, RIVALS, PRESTIGE, CLIENTS };
 if (typeof module !== 'undefined' && module.exports) module.exports = DATA; else root.CA_DATA = DATA;
 })(typeof window !== 'undefined' ? window : globalThis);
