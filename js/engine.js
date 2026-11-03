@@ -139,12 +139,12 @@ function resolvable(types) {
 /* ---------- state ---------- */
 function newState(opts) {
   opts = opts || {};
-  const s = { v: 1, seed: (opts.seed | 0) || ((Date.now() ^ (Math.random() * 1e9)) | 0), coins: 30, rep: 0, done: 0, layers: { coast: 1, lang: 1, sun: 1 }, tools: {}, atlas: {}, prestigeDone: {}, rivals: { vosk: 0, pell: 0, ortel: 0 }, unlocked: !!opts.unlocked, gated: false, commission: null, history: [], stats: { correct: 0, wrong: 0, wagersWon: 0, wagersLost: 0, routesRight: 0, routesWrong: 0, coinsEarned: 0, refused: 0 }, lastCountry: 'PT', mastered: false, flags: {} };
+  const s = { v: 1, seed: (opts.seed | 0) || ((Date.now() ^ (Math.random() * 1e9)) | 0), coins: 30, rep: 0, done: 0, layers: { coast: 1, lang: 1, sun: 1 }, tools: {}, atlas: {}, prestigeDone: {}, rivals: { vosk: 0, pell: 0, ortel: 0 }, unlocked: true, commission: null, history: [], stats: { correct: 0, wrong: 0, wagersWon: 0, wagersLost: 0, routesRight: 0, routesWrong: 0, coinsEarned: 0, refused: 0 }, lastCountry: 'PT', mastered: false, flags: {} };
   return s;
 }
-function rankOf(s) { let r = D.RANKS[0]; for (const k of D.RANKS) if (s.rep >= k.rep) r = k; if (!s.unlocked && r.id > D.FREE_RANK) r = D.RANKS[D.FREE_RANK - 1]; return r; }
+function rankOf(s) { let r = D.RANKS[0]; for (const k of D.RANKS) if (s.rep >= k.rep) r = k; return r; }
 function nextRank(s) { const r = rankOf(s); return D.RANKS[r.id] || null; }
-function continentsOpen(s) { return s.unlocked ? Object.keys(W.CONTINENTS) : D.FREE_CONTINENTS.slice(); }
+function continentsOpen(s) { return Object.keys(W.CONTINENTS); }
 function available(s) { const open = continentsOpen(s); const ok = resolvable(ownedTypes(s)); return C.filter(c => open.includes(c.c) && ok.has(c.id)); }
 function ownedTypes(s) { return TYPES.filter(t => s.layers[t]); }
 function tierFor(s, c) { const r = rankOf(s).id; const a = s.atlas[c.id]; const seen = a ? a.n : 0; let t = r <= 1 ? 1 : r <= 3 ? 2 : 3; if (seen >= 3) t = Math.min(3, t + 1); if (seen === 0 && r >= 2) t = Math.max(1, t - 1); return t; }
@@ -160,7 +160,7 @@ function chooseTarget(s) {
   const weakest = avail.slice().sort((a, b) => (s.atlas[a.id].due) - (s.atlas[b.id].due))[0];
   return { c: weakest, review: true };
 }
-function prestigeAvailable(s) { const r = rankOf(s).id; return s.unlocked ? D.PRESTIGE.filter(p => !s.prestigeDone[p.id] && p.rank <= r && p.clues.every(([t]) => s.layers[t])) : []; }
+function prestigeAvailable(s) { const r = rankOf(s).id; return D.PRESTIGE.filter(p => !s.prestigeDone[p.id] && p.rank <= r && p.clues.every(([t]) => s.layers[t])); }
 function newCommission(s, opts) {
   opts = opts || {};
   if (s.commission) return s.commission;
@@ -204,7 +204,7 @@ function answer(s, countryId, wager) {
   const res = { correct, pay, rep, target, chosen: c, failed, wager };
   s.history.push({ t: com.target, a: countryId, ok: correct, p: com.prestige || null }); if (s.history.length > 200) s.history.shift();
   if (correct) com.routeOptions = routeOptions(s, target);
-  checkGate(s); checkMastery(s);
+  checkMastery(s);
   return res;
 }
 function refuse(s) { const com = s.commission; if (!com || com.answered) return false; s.stats.refused++; s.commission = null; return true; }
@@ -238,7 +238,6 @@ function plotRoute(s, optionId) {
 /* ---------- workshop ---------- */
 function buyLayer(s, id) { const L = D.LAYERS.find(l => l.id === id); if (!L || s.layers[id] || s.coins < L.cost) return false; s.coins -= L.cost; s.layers[id] = 1; return true; }
 function buyTool(s, id) { const U = D.UPGRADES.find(u => u.id === id); if (!U || s.tools[id] || s.coins < U.cost) return false; s.coins -= U.cost; s.tools[id] = 1; return true; }
-function checkGate(s) { if (!s.unlocked && s.rep >= D.RANKS[D.FREE_RANK].rep) s.gated = true; }
 function checkMastery(s) { if (s.mastered) return; if (rankOf(s).id === 5 && available(s).every(c => s.atlas[c.id] && s.atlas[c.id].id)) { s.mastered = true; s.flags.masteredAt = s.done; } }
 function atlasProgress(s) { const avail = available(s); const idd = avail.filter(c => s.atlas[c.id] && s.atlas[c.id].id).length; const solid = avail.filter(c => s.atlas[c.id] && s.atlas[c.id].n >= 3 && s.atlas[c.id].w <= s.atlas[c.id].n).length; return { total: avail.length, identified: idd, solid }; }
 
@@ -247,7 +246,7 @@ const num = (v, def, lo, hi) => { v = +v; if (!isFinite(v)) v = def; if (lo !== 
 function sanitizeAtlas(raw) { const out = {}; if (!raw || typeof raw !== 'object') return out; for (const id in raw) { if (!byId[id]) continue; const a = raw[id]; if (!a || typeof a !== 'object') continue; out[id] = { n: Math.round(num(a.n, 0, 0, 1e6)), w: Math.round(num(a.w, 0, 0, 1e6)), ease: num(a.ease, 2.5, 1.3, 3.2), iv: Math.round(num(a.iv, 1, 1, 1e5)), due: Math.round(num(a.due, 0, 0, 1e9)), id: a.id === true }; } return out; }
 function sanitize(raw, atlasBackup) {
   if (!raw || typeof raw !== 'object') return null;
-  const s = newState({ seed: raw.seed, unlocked: raw.unlocked === true });
+  const s = newState({ seed: raw.seed });
   s.coins = num(raw.coins, 0, 0, 1e9); s.rep = num(raw.rep, 0, 0, 1e7); s.done = Math.round(num(raw.done, 0, 0, 1e9));
   if (raw.layers && typeof raw.layers === 'object') for (const k in raw.layers) if (D.LAYERS.find(l => l.id === k) && raw.layers[k]) s.layers[k] = 1;
   if (raw.tools && typeof raw.tools === 'object') for (const k in raw.tools) if (D.UPGRADES.find(u => u.id === k) && raw.tools[k]) s.tools[k] = 1;
@@ -256,7 +255,7 @@ function sanitize(raw, atlasBackup) {
   if (raw.prestigeDone && typeof raw.prestigeDone === 'object') for (const k in raw.prestigeDone) if (D.PRESTIGE.find(p => p.id === k)) s.prestigeDone[k] = String(raw.prestigeDone[k]).slice(0, 10);
   if (raw.rivals && typeof raw.rivals === 'object') for (const k in s.rivals) s.rivals[k] = Math.round(num(raw.rivals[k], 0, 0, 1e4));
   if (raw.stats && typeof raw.stats === 'object') for (const k in s.stats) s.stats[k] = Math.round(num(raw.stats[k], 0, 0, 1e9));
-  s.lastCountry = byId[raw.lastCountry] ? raw.lastCountry : 'PT'; s.mastered = raw.mastered === true; s.gated = raw.gated === true && !s.unlocked;
+  s.lastCountry = byId[raw.lastCountry] ? raw.lastCountry : 'PT'; s.mastered = raw.mastered === true;
   if (Array.isArray(raw.history)) s.history = raw.history.filter(h => h && byId[h.t] && byId[h.a]).slice(-200).map(h => ({ t: h.t, a: h.a, ok: h.ok === true, p: typeof h.p === 'string' ? h.p : null }));
   // an in-progress commission is rebuilt from its target rather than trusted
   if (raw.commission && typeof raw.commission === 'object' && byId[raw.commission.target] && !raw.commission.answered) {
