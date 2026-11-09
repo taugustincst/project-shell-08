@@ -2,7 +2,7 @@
 
 **Adult geography as a deduction game, not a quiz.** Clients bring partial evidence: a coastline fragment, the language on a sign, a sun angle, a railway gauge, a coin, a flag glimpsed wrong. You take it to the atlas, find the one land it all fits, plot the expedition, and fill your atlas. You finish the career actually knowing the map of the world.
 
-A paid download on Google Play: the whole world is in the app, with no in-app purchases. No ads, no consumables, fully offline.
+Free on Google Play: Europe and the Americas, up to Journeyman, play free, and one in-app purchase ($2.99) opens the whole world. No ads, no consumables, fully offline.
 
 Status: **v1.0.0 draft built 2026-11-03**, not yet submitted. Brief and living log in [HANDOFF.md](HANDOFF.md); build plan in [tasks/todo.md](tasks/todo.md). Repo rename at ship time (Tj's call).
 
@@ -36,4 +36,4 @@ npm install && node tests/smoke.js
 Saves: `cartographer.v1` (career) and `cartographer.v1.atlas` (atlas backup, restored if the main save is lost).
 
 ## Publishing
-A paid app on Google Play with the whole game packed inside it (`android/play`, see `PLAY.md`). Pages deploys only the store page from `main` (`site/index.html`, the privacy policy `privacy.html` and the store graphics), not the playable game. Store copy: `store/listing.md`.
+A free app on Google Play, with a one-time unlock for the whole world, and the whole game packed inside it (`android/play`, see `PLAY.md`). Pages deploys only the store page from `main` (`site/index.html`, the privacy policy `privacy.html` and the store graphics), not the playable game. Store copy: `store/listing.md`.

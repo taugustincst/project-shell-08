@@ -1,6 +1,6 @@
 # Cartographer's Apprentice — Google Play listing (draft, not submitted)
 
-Roster rules: short description is features only, never price or promo wording. Screenshot captions state content. Submission only on Tj's explicit approval. This title is a paid download: the whole game is in the app, with no in-app purchases.
+Roster rules: short description is features only, never price or promo wording. Screenshot captions state content. Submission only on Taylor's explicit approval. This title is free to install: Europe and the Americas, up to the rank of Journeyman, are free; one in-app purchase opens the whole world.
 
 ## Title (30)
 Cartographer's Apprentice
@@ -11,7 +11,7 @@ Not a quiz. A geography deduction game: evidence, atlas, expedition, career.
 ## Full description
 **Not a quiz. A deduction game.** You apprentice to a master mapmaker. Clients bring fragments of the world: a torn chart of a coastline, a sign in a language they could not read, the length of a shadow at noon, the width between the rails, a coin, a flag they are fairly sure they remember. You take the fragments to the atlas and find the one place on earth they all fit.
 
-**A real atlas.** 150 lands with coasts, borders, languages, scripts, railway gauges, currencies, rules of the road, flags and native wildlife, in layers you add to your reference shelf as your career grows. Tap a clue to shade every land it allows and watch the world narrow to one.
+**A real atlas.** 151 lands with coasts, borders, languages, scripts, railway gauges, currencies, rules of the road, flags and native wildlife, in layers you add to your reference shelf as your career grows. Tap a clue to shade every land it allows and watch the world narrow to one.
 
 **A career.** Five ranks from Apprentice to Master Cartographer. Commissions pay coins; coins buy reference layers and workshop tools. Forty prestige commissions are contested by three rival workshops. Plot each expedition through the right neighbour, under budget.
 
@@ -20,20 +20,20 @@ Not a quiz. A geography deduction game: evidence, atlas, expedition, career.
 - Flags, capitals, countries, geography: learned by deduction.
 - No ads. No timers. No accounts. Fully offline.
 - Portrait, one-handed, large text and high contrast options.
-- The whole world from the first commission: every continent, five ranks, forty prestige commissions.
+- Europe and the Americas are free up to Journeyman; one purchase opens Africa, Asia, Oceania, all five ranks and forty prestige commissions.
 
 ## Screenshot captions
 1. Evidence on the desk, the atlas open: a deduction in progress
 2. Tap a clue to shade every land it allows
-3. 150 lands · 8 kinds of evidence · 5 ranks
-4. Forty prestige commissions, three rival workshops
+3. 151 lands · 8 kinds of evidence · 5 ranks
+4. Plot each expedition through a true neighbour
 
 ## Category
 Game · Educational (or Trivia). Tags: geography, countries, flags, capitals, deduction, offline.
 
 ## Declarations (to confirm in Console)
-- Price: paid download, suggested $2.99 (set in Play Console)
-- IARC: no violence, no gambling, no user interaction, no ads; in-app purchases: none.
+- Price: free to install. In-app product `full_unlock` (one-time, non-consumable, the whole world), $2.99, set in Console only and never on the site.
+- IARC: no violence, no gambling, no user interaction, no ads; in-app purchases: yes (one non-consumable unlock, no random items).
 - Target audience 13+ (13-15, 16-17, 18+). Not designed for children.
-- Data safety: no data collected, no data shared, no network access; progress stays on the device. Privacy policy at the repo's Pages site, privacy.html. Contact elderon@augustinnovations.io.
+- Data safety: no data collected, no data shared; progress stays on the device. The purchase is made and stored by Google Play; the app has no server and sends nothing anywhere. (Check this against the form's own questions on in-app purchases when you fill it in.) Privacy policy at the repo's Pages site, privacy.html. Contact elderon@augustinnovations.io.
 - Apply to Play Pass after launch.

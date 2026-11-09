@@ -19,6 +19,6 @@ jobs:
       - run: node tests/engine.test.js
       - run: node tools/validate.js
       - run: node sim/sim.js 300 7
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - run: node tests/smoke.js

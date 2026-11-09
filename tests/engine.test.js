@@ -31,12 +31,15 @@ t('spaced repetition: a wrong answer resets the interval, right answers grow it'
   s.commission = Object.assign(E.buildCommission(s, id, E.TYPES, 1, {}), { pay: 10, tier: 1, review: true }); E.answer(s, id, false); assert.ok(s.atlas[id].iv > iv1); E.finishCommission(s);
   s.commission = Object.assign(E.buildCommission(s, id, E.TYPES, 1, {}), { pay: 10, tier: 1, review: true }); E.answer(s, 'DE', false); assert.strictEqual(s.atlas[id].iv, 1); assert.ok(s.atlas[id].due > s.done);
 });
-t('the whole world is open: no rank cap past Journeyman, every continent and the prestige commissions, for new and old saves', () => {
-  assert.strictEqual(D.FREE_RANK, undefined); assert.strictEqual(D.FREE_CONTINENTS, undefined);
-  const s = E.newState({ seed: 9 }); assert.strictEqual(s.unlocked, true); assert.strictEqual(E.continentsOpen(s).length, 6); assert.ok(E.available(s).length > 100);
-  s.rep = 1000; assert.strictEqual(E.rankOf(s).id, 5); for (const L of D.LAYERS) s.layers[L.id] = 1; assert.ok(E.prestigeAvailable(s).length === D.PRESTIGE.length);
-  const r = E.newState({ seed: 9 }); r.rep = D.RANKS[2].rep; assert.strictEqual(E.rankOf(r).id, 3, 'Draughtsman is reached by repute alone');
-  const old = E.sanitize({ seed: 9, unlocked: false, gated: true, rep: 200 }); assert.strictEqual(old.unlocked, true); assert.strictEqual(old.gated, undefined); assert.strictEqual(E.rankOf(old).id, 3); assert.strictEqual(E.continentsOpen(old).length, 6);
+t('free apprenticeship: rank caps at Journeyman and continents stay closed until the unlock', () => {
+  const s = E.newState({ seed: 9 }); s.rep = 1000; assert.strictEqual(E.rankOf(s).id, D.FREE_RANK); assert.deepStrictEqual(E.continentsOpen(s), D.FREE_CONTINENTS); assert.strictEqual(E.prestigeAvailable(s).length, 0);
+  assert.ok(E.available(s).every(c => D.FREE_CONTINENTS.includes(c.c)));
+  s.unlocked = true; assert.strictEqual(E.rankOf(s).id, 5); assert.ok(E.available(s).length > 100); for (const L of D.LAYERS) s.layers[L.id] = 1; assert.ok(E.prestigeAvailable(s).length === D.PRESTIGE.length);
+});
+t('a save never carries the unlock (Play is the only source), and the gate closes again at Journeyman', () => {
+  const s = E.sanitize({ seed: 4, rep: 500, unlocked: true, gated: false }, null); assert.strictEqual(s.unlocked, false); assert.strictEqual(E.rankOf(s).id, D.FREE_RANK);
+  E.checkGate(s); assert.strictEqual(s.gated, true);
+  const t = E.newState({ seed: 5 }); t.rep = D.RANKS[D.FREE_RANK].rep - 1; E.checkGate(t); assert.strictEqual(t.gated, false);
 });
 t('targets are only drawn from lands the owned layers can resolve', () => { const s = E.newState({ seed: 10, unlocked: true }); const ok = E.resolvable(E.ownedTypes(s)); for (let i = 0; i < 60; i++) { const com = E.newCommission(s); assert.ok(ok.has(com.target), com.target); E.answer(s, com.target, false); E.finishCommission(s); } });
 t('prestige commissions go to the rival on failure and to you on success', () => {

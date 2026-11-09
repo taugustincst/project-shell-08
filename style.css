@@ -36,5 +36,5 @@ button { font: inherit; color: inherit; } a { color: var(--accent); } h1, h2, h3
 @media (min-width: 600px) { .modal { align-items: center; } .sheet { border-radius: 18px; } }
 .sheet h2 { margin: 4px 0 8px; font-size: 1.3rem; } .ok { color: var(--ok); } .bad { color: var(--bad); }
 .choices { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; } .choice { text-align: left; min-height: 48px; }
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 12px; z-index: 30; font-size: 0.9rem; max-width: 90%; }
+.toast { position: fixed; left: 50%; top: calc(12px + env(safe-area-inset-top)); pointer-events: none; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 12px; z-index: 30; font-size: 0.9rem; max-width: 90%; }
 .rivals li { margin: 4px 0; }
