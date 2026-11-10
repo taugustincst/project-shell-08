@@ -4,8 +4,10 @@
 const W = (typeof CA_WORLD !== 'undefined') ? CA_WORLD : require('./world.js');
 const D = (typeof CA_DATA !== 'undefined') ? CA_DATA : require('./data.js');
 const C = W.COUNTRIES, byId = {}; C.forEach(c => { byId[c.id] = c; });
-C.forEach(c => { c.nb = c.nb.filter(n => byId[n]); c.landlocked = c.sea.length === 0; });
-const PLANT = s => D.PLANT_WORDS.some(w => s.toLowerCase().includes(w));
+const SEA_PARENT = D.SEA_PARENT || {};
+const seaWithParents = list => { const out = new Set(); for (let x of list) while (x && !out.has(x)) { out.add(x); x = SEA_PARENT[x]; } return out; };
+C.forEach(c => { c.nb = c.nb.filter(n => byId[n]); c.landlocked = c.sea.length === 0; c.waters = seaWithParents(c.sea); });
+const PLANT = s => D.PLANT_WORDS.some(w => new RegExp('(^|[^a-z])' + w + '($|[^a-z])').test(s.toLowerCase())); // whole words: a palmchat is a bird
 const famOf = {}; for (const f in D.LANG_FAMILY) for (const l of D.LANG_FAMILY[f]) famOf[l] = f;
 const curFamily = cur => { const l = cur.toLowerCase(); for (const f of D.CUR_FAMILIES) if (l.includes(f)) return f; return null; };
 const TYPES = ['coast', 'lang', 'sun', 'gauge', 'currency', 'flag', 'drive', 'wild'];
@@ -31,7 +33,7 @@ function flagDiff(a, b) { // a: {l,c,e} description; b: country flag. Counts how
 function matches(clue, c) {
   const k = clue.k;
   switch (clue.t) {
-    case 'coast': return k.sea ? c.sea.includes(k.sea) : (c.landlocked && (!k.nb || c.nb.includes(k.nb)));
+    case 'coast': return k.sea ? c.waters.has(k.sea) : (c.landlocked && (!k.nb || c.nb.includes(k.nb)));
     case 'lang': return k.lang ? c.lang.includes(k.lang) : k.scr ? c.scr === k.scr : c.lang.some(l => famOf[l] === k.fam);
     case 'sun': return Math.abs(c.lat - k.lat) <= k.tol;
     case 'gauge': return c.g !== undefined && (k.g !== undefined ? c.g === k.g : D.GAUGE_CLASS(c.g) === k.cls);
@@ -223,8 +225,8 @@ function routeOptions(s, target) {
     return { kind: 'land', opts, budget };
   }
   const allSeas = Array.from(new Set(C.flatMap(c => c.sea)));
-  const good = shuffle(s, target.sea).slice(0, 1); const decoys = shuffle(s, allSeas.filter(x => !target.sea.includes(x))).slice(0, 3);
-  return { kind: 'sea', opts: shuffle(s, good.concat(decoys)).map(x => ({ id: x, name: x, leagues: Math.round(dist(from, target) / 100) + (target.sea.includes(x) ? 0 : 3), ok: target.sea.includes(x) })), budget: Math.round(dist(from, target) / 100) + 2 };
+  const good = shuffle(s, target.sea).slice(0, 1); const decoys = shuffle(s, allSeas.filter(x => !target.waters.has(x))).slice(0, 3);
+  return { kind: 'sea', opts: shuffle(s, good.concat(decoys)).map(x => ({ id: x, name: x, leagues: Math.round(dist(from, target) / 100) + (target.waters.has(x) ? 0 : 3), ok: target.waters.has(x) })), budget: Math.round(dist(from, target) / 100) + 2 };
 }
 function plotRoute(s, optionId) {
   const com = s.commission; if (!com || !com.routeOptions || com.route) return null;

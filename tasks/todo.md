@@ -49,5 +49,5 @@ Verified locally: tests/engine.test.js 13/13; tools/validate.js 3,096 generated 
 - [x] Message strip moved off the controls
 - [x] Smoke test buys, reloads, restores; emulator tap-through in CI; launch on Android 9 and 14; sim covers free and paying players
 - [x] Listing, privacy policy, PLAY.md, README updated; 151 lands
-- [ ] Full fact pass over all 151 records
+- [x] Full fact pass over all 151 records and the prestige letters (2026-11-10)
 - [ ] Merge, upload-key secrets, Console product `full_unlock` at $2.99 (Taylor)
