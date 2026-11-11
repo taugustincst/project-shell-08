@@ -54,5 +54,14 @@ t('sanitize survives garbage, clamps, and restores the atlas from the backup', (
   assert.ok(s.commission && s.commission.target === 'FR' && s.commission.tier === 3 && s.commission.pay === 1 && E.candidates(s.commission.clues).length === 1);
   const b = E.sanitize({ atlas: {} }, { DE: { n: 2, id: true } }); assert.ok(b.atlas.DE && b.atlas.DE.n === 2);
 });
+t('fact pass: neighbours are mutual, plant words are whole words, a coast on an arm of a sea counts for the sea', () => {
+  for (const c of E.C) for (const n of c.nb) assert.ok(E.byId[n].nb.includes(c.id), c.id + ' lists ' + n + ' but not the other way round');
+  assert.ok(!E.PLANT('palmchat') && E.PLANT('date palm') && E.PLANT('guelder rose'));
+  const coast = sea => ({ t: 'coast', k: { sea } });
+  assert.ok(E.matches(coast('Atlantic Ocean'), E.byId.GH), 'Ghana is on the Atlantic');
+  assert.ok(E.matches(coast('Pacific Ocean'), E.byId.VN) && E.matches(coast('Pacific Ocean'), E.byId.TH), 'Vietnam and Thailand reach the Pacific');
+  assert.ok(E.matches(coast('Mediterranean Sea'), E.byId.HR) && E.matches(coast('Ionian Sea'), E.byId.IT));
+  assert.ok(!E.matches(coast('Atlantic Ocean'), E.byId.IT), 'the Mediterranean is not counted as the Atlantic');
+});
 t('mastery: all available lands identified at rank 5', () => { const s = E.newState({ seed: 12, unlocked: true }); s.rep = 1000; for (const L of D.LAYERS) s.layers[L.id] = 1; for (const c of E.C) s.atlas[c.id] = { n: 1, w: 0, ease: 2.5, iv: 2, due: 5, id: true }; const com = E.newCommission(s); E.answer(s, com.target, false); assert.ok(s.mastered); });
 console.log(process.exitCode ? 'SOME FAILED' : `ALL ${n} PASSED`);

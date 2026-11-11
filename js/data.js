@@ -18,6 +18,17 @@ const LANG_FAMILY = {
 };
 const PLANT_WORDS = ['tree','palm','oak','orchid','rose','tulip','sunflower','grapevine','cedar','baobab','papyrus','yerba','welwitschia','tea','cocoa','centaury','beech','apricot'];
 const CUR_FAMILIES = ['dollar','peso','franc','pound','dinar','rupee','krona','króna','krone','shilling','riyal','rial','manat','som','real','lira','euro','yen','yuan','won','ruble','rand','kwacha','dirham','leu','lev','mark','kuna','forint','złoty','koruna','hryvnia','lari','dram','tenge','baht','kip','riel','đồng','ringgit','rupiah','taka','ngultrum','afghani','birr','nakfa','naira','cedi','ouguiya','pula','metical','ariary','kwanza','quetzal','lempira','córdoba','colón','balboa','gourde','boliviano','guaraní','bolívar','sol','kina','tögrög','somoni','kyat','lek','denar'];
+// A coast on a sea also counts as a coast on the larger water people commonly say it is part of, so a clue
+// about the larger water never rules out a land on one of its arms (Ghana is on the Atlantic, Vietnam on the Pacific).
+const SEA_PARENT = {
+  'Adriatic Sea': 'Mediterranean Sea', 'Aegean Sea': 'Mediterranean Sea', 'Ionian Sea': 'Mediterranean Sea',
+  'Gulf of Guinea': 'Atlantic Ocean', 'Caribbean Sea': 'Atlantic Ocean', 'Gulf of Mexico': 'Atlantic Ocean', 'Norwegian Sea': 'Atlantic Ocean',
+  'Arabian Sea': 'Indian Ocean', 'Bay of Bengal': 'Indian Ocean', 'Andaman Sea': 'Indian Ocean', 'Gulf of Aden': 'Indian Ocean',
+  'Mozambique Channel': 'Indian Ocean', 'Timor Sea': 'Indian Ocean', 'Gulf of Oman': 'Arabian Sea',
+  'South China Sea': 'Pacific Ocean', 'East China Sea': 'Pacific Ocean', 'Yellow Sea': 'Pacific Ocean', 'Sea of Japan': 'Pacific Ocean',
+  'Coral Sea': 'Pacific Ocean', 'Tasman Sea': 'Pacific Ocean', 'Java Sea': 'Pacific Ocean', 'Gulf of Thailand': 'South China Sea',
+  'Barents Sea': 'Arctic Ocean', 'Sea of Azov': 'Black Sea'
+};
 const GAUGE_CLASS = g => g === 0 ? 'no railways' : g === 1435 ? 'standard gauge' : g > 1435 ? 'broad gauge' : 'narrow gauge';
 const RANKS = [
   { id: 1, name: 'Apprentice', rep: 0, blurb: 'You sharpen pencils, grind pigments, and are allowed, under supervision, to say where a coastline is.' },
@@ -31,7 +42,7 @@ const LAYERS = [
   { id: 'coast', name: 'Coasts and borders', cost: 0, desc: 'Which seas a land touches, and which lands it touches. The oldest layer in the atlas.' },
   { id: 'lang', name: 'Languages and scripts', cost: 0, desc: 'What is spoken and how it is written. Signs are evidence.' },
   { id: 'sun', name: 'Sun tables', cost: 0, desc: 'Noon shadow lengths by date and latitude. A pole and a ruler are an instrument.' },
-  { id: 'drive', name: 'Rules of the road', cost: 120, desc: 'Which side of the road the carts keep to. Half the world does it the other way.' },
+  { id: 'drive', name: 'Rules of the road', cost: 120, desc: 'Which side of the road the carts keep to. About a third of the world does it the other way.' },
   { id: 'gauge', name: 'Railway gauges', cost: 180, desc: 'The distance between the rails, measured by engineers and argued about by empires.' },
   { id: 'currency', name: 'Coinage', cost: 240, desc: 'What the client paid with. Dollars, pesos and francs travel further than you think.' },
   { id: 'wild', name: 'Flora and fauna', cost: 300, desc: 'A creature or a plant, glimpsed from a carriage window, that is native to the land where it was seen.' },
@@ -65,8 +76,8 @@ const PRESTIGE = [
   { id: 'p09', target: 'CH', rank: 2, rival: 'ortel', title: 'Four Tongues', client: 'A courier heard four languages in one day without crossing a border, and the coins were francs.', clues: [['lang',1],['currency',2],['coast',2]] },
   { id: 'p10', target: 'AU', rank: 3, rival: 'vosk', title: 'The Southern Cross', client: 'An eyewitness describes a flag with the Union Jack and stars, "and the kangaroos," he adds, "were real."', clues: [['flag',1],['wild',1],['sun',2]] },
   { id: 'p11', target: 'NZ', rank: 3, rival: 'pell', title: 'The Other Southern Cross', client: 'The same eyewitness, a week later, is less sure. "The stars were red. The bird did not fly."', clues: [['flag',1],['wild',1],['drive',1]] },
-  { id: 'p12', target: 'BR', rank: 3, rival: 'ortel', title: 'The Portuguese Giant', client: 'A rubber trader: Portuguese spoken on a continent where everyone else speaks Spanish, and the rails were narrow.', clues: [['lang',1],['gauge',2],['sun',3]] },
-  { id: 'p13', target: 'ET', rank: 3, rival: 'vosk', title: 'The Script Nobody Reads', client: 'A missionary copied a sign in a script with its own alphabet, from a highland with no coast.', clues: [['lang',2],['coast',2],['wild',1]] },
+  { id: 'p12', target: 'BR', rank: 3, rival: 'ortel', title: 'The Portuguese Giant', client: 'A rubber trader: Portuguese spoken where nearly every neighbour speaks Spanish, and the rails were narrow.', clues: [['lang',1],['gauge',2],['sun',3]] },
+  { id: 'p13', target: 'ET', rank: 3, rival: 'vosk', title: 'The Script Nobody Reads', client: 'A missionary copied a sign in a script of its own, from a highland with no coast.', clues: [['lang',2],['coast',2],['wild',1]] },
   { id: 'p14', target: 'IR', rank: 3, rival: 'pell', title: 'The Caspian Shore', client: 'A carpet buyer travelled from the Caspian to the Gulf without changing country, "and the shadows at noon were short."', clues: [['coast',1],['sun',1],['lang',1]] },
   { id: 'p15', target: 'TH', rank: 3, rival: 'ortel', title: 'Five Stripes', client: 'An eyewitness flag: five horizontal stripes, red, white, blue — "or was it the other way round?" The carts kept left.', clues: [['flag',1],['drive',1],['gauge',2]] },
   { id: 'p16', target: 'CA', rank: 2, rival: 'vosk', title: 'The Maple Leaf', client: 'A lumberjack describes a flag with a leaf, a beaver on the coin, and three oceans.', clues: [['flag',1],['coast',1],['lang',1]] },
@@ -74,7 +85,7 @@ const PRESTIGE = [
   { id: 'p18', target: 'PE', rank: 3, rival: 'ortel', title: 'The Llama Caravan', client: 'A mining engineer: llamas, Quechua spoken on the signs, and a Pacific port.', clues: [['wild',1],['lang',1],['coast',1]] },
   { id: 'p19', target: 'KZ', rank: 4, rival: 'vosk', title: 'The Steppe Eagle', client: 'A railway surveyor: broad gauge, a flag of sky blue with an eagle, and the Caspian at the western edge.', clues: [['gauge',1],['flag',1],['coast',1]] },
   { id: 'p20', target: 'ID', rank: 4, rival: 'pell', title: 'The Dragon Island', client: 'A zoologist saw a lizard the size of a boat on an island in an archipelago where they drive on the left.', clues: [['wild',1],['drive',1],['sun',2]] },
-  { id: 'p21', target: 'MA', rank: 3, rival: 'ortel', title: 'The Green Star', client: 'An eyewitness: a red flag with one green star. Two seas. Macaques on a rock.', clues: [['flag',1],['coast',1],['wild',1]] },
+  { id: 'p21', target: 'MA', rank: 3, rival: 'ortel', title: 'The Green Star', client: 'An eyewitness: a red flag with one green star. Two seas. Macaques in the cedar forests.', clues: [['flag',1],['coast',1],['wild',1]] },
   { id: 'p22', target: 'KE', rank: 4, rival: 'vosk', title: 'The Shield and Spears', client: 'A hunter\'s flag: black, red and green with a shield. Swahili on the signs. Carts on the left.', clues: [['flag',1],['lang',1],['drive',1]] },
   { id: 'p23', target: 'NP', rank: 4, rival: 'pell', title: 'The Flag That Is Not a Rectangle', client: 'An eyewitness insists the flag was two triangles, one above the other. The land had no coast.', clues: [['flag',1],['coast',2],['lang',2]] },
   { id: 'p24', target: 'FI', rank: 3, rival: 'ortel', title: 'The Odd Gauge', client: 'An engineer: "Their rails are four millimetres wider than Russia\'s. They are very proud of this."', clues: [['gauge',1],['lang',1],['sun',2]] },
@@ -96,6 +107,6 @@ const PRESTIGE = [
   { id: 'p40', target: 'MT', rank: 5, rival: 'vosk', title: 'The George Cross', client: 'A naval chaplain: a white-and-red flag with a medal in the corner, an island with no railway where the carts keep left.', clues: [['flag',1],['gauge',1],['drive',1]] }
 ];
 const CLIENTS = ['a spice merchant', 'a retired admiral', 'a botanist with a pressed leaf', 'a railway engineer', 'a missionary\'s widow', 'a stamp collector', 'a diplomat\'s secretary', 'a shipping clerk', 'a schoolteacher with a globe', 'a newspaper correspondent', 'a tea planter', 'a woman who found a letter in a bottle', 'an opera singer who toured too much', 'a customs officer', 'a cartographer from a rival house, in disguise'];
-const DATA = { LANG_FAMILY, PLANT_WORDS, CUR_FAMILIES, GAUGE_CLASS, RANKS, FREE_RANK, FREE_CONTINENTS, LAYERS, UPGRADES, RIVALS, PRESTIGE, CLIENTS };
+const DATA = { LANG_FAMILY, PLANT_WORDS, SEA_PARENT, CUR_FAMILIES, GAUGE_CLASS, RANKS, FREE_RANK, FREE_CONTINENTS, LAYERS, UPGRADES, RIVALS, PRESTIGE, CLIENTS };
 if (typeof module !== 'undefined' && module.exports) module.exports = DATA; else root.CA_DATA = DATA;
 })(typeof window !== 'undefined' ? window : globalThis);
