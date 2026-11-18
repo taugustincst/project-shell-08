@@ -1,4 +1,4 @@
-# Cartographer's Apprentice — Google Play listing (draft, not submitted)
+# Cartographer's Apprentice — Google Play listing
 
 Roster rules: short description is features only, never price or promo wording. Screenshot captions state content. Submission only on Taylor's explicit approval. This title is free to install: Europe and the Americas, up to the rank of Journeyman, are free; one in-app purchase opens the whole world.
 
@@ -6,27 +6,34 @@ Roster rules: short description is features only, never price or promo wording. 
 Cartographer's Apprentice
 
 ## Short description (80)
-Not a quiz. A geography deduction game: evidence, atlas, expedition, career.
+Geography deduction game: read the clues and find the one country that fits.
 
 ## Full description
-**Not a quiz. A deduction game.** You apprentice to a master mapmaker. Clients bring fragments of the world: a torn chart of a coastline, a sign in a language they could not read, the length of a shadow at noon, the width between the rails, a coin, a flag they are fairly sure they remember. You take the fragments to the atlas and find the one place on earth they all fit.
+**A geography puzzle game where you find countries on the world map by deduction, not by quiz.**
 
-**A real atlas.** 151 lands with coasts, borders, languages, scripts, railway gauges, currencies, rules of the road, flags and native wildlife, in layers you add to your reference shelf as your career grows. Tap a clue to shade every land it allows and watch the world narrow to one.
+**Read the evidence.** You apprentice to a master mapmaker. Clients bring fragments of the world: a torn chart of a coastline, a sign in a language they could not read, the length of a shadow at noon, the width between the rails, a coin, a flag they are fairly sure they remember. Eight kinds of evidence, and every clue is true of the place (the flag is an eyewitness report with exactly one detail wrong, and labelled as such).
 
-**A career.** Five ranks from Apprentice to Master Cartographer. Commissions pay coins; coins buy reference layers and workshop tools. Forty prestige commissions are contested by three rival workshops. Plot each expedition through the right neighbour, under budget.
+**Shade the atlas.** 151 lands, with coasts, borders, languages, scripts, latitude, railway gauges, currencies, rules of the road, native wildlife and flags, in reference layers you add to your shelf as your career grows. With the coloured inks, tap a clue to shade every land it allows and watch the world narrow to one. Every commission resolves to exactly one land.
 
-**You will know the map.** Returning clients quietly bring back the places you have identified before, on a spaced schedule, until you know them cold. Finish the career and you know countries, capitals, languages, flags and coasts for real, from evidence, not flash cards.
+**Plot the expedition.** Once you have named the place, reach it through a true neighbour, or by the right sea for an island, within a budget of leagues. A wrong answer shows the real atlas entry and which clues ruled your choice out.
 
-- Flags, capitals, countries, geography: learned by deduction.
-- No ads. No timers. No accounts. Fully offline.
-- Portrait, one-handed, large text and high contrast options.
-- Europe and the Americas are free up to Journeyman; one purchase opens Africa, Asia, Oceania, all five ranks and forty prestige commissions.
+**Build a career.** Five ranks from Apprentice to Master Cartographer. Commissions pay coins; coins buy reference layers and workshop tools, from index cards to a wager licence. Forty prestige commissions are contested by three rival workshops.
+
+**Learn the map for good.** Returning clients bring back the places you have identified before, on a spaced schedule, until you know them cold. Countries, capitals, languages, flags and coasts, learned from evidence rather than flash cards.
+
+- Europe and the Americas are free to play up to the rank of Journeyman. One purchase opens Africa, Asia and Oceania, all five ranks and the forty prestige commissions; nothing else to buy.
+- No ads. No timers. No accounts.
+- Offline game: plays with no connection.
+- Portrait, one-handed, with large-text and high-contrast options.
 
 ## Screenshot captions
-1. Evidence on the desk, the atlas open: a deduction in progress
-2. Tap a clue to shade every land it allows
-3. 151 lands · 8 kinds of evidence · 5 ranks
-4. Plot each expedition through a true neighbour
+1. Every client brings evidence · A coin, a sign, a torn chart of a coast
+2. Tap a clue to shade the atlas · Every land it allows lights up
+3. Add clues until one land fits · Deduction, not a quiz
+4. Fill your atlas, land by land · 151 lands, each with a full entry
+5. Plot the expedition · Through a true neighbour, under budget
+
+Files: `store/play/play-01.png` to `play-05.png` (1080x1920), each made from an unedited gameplay screenshot in `store/play/raw/` (one commission, Peru, from evidence to expedition).
 
 ## Category
 Game · Educational (or Trivia). Tags: geography, countries, flags, capitals, deduction, offline.
