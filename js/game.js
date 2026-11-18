@@ -5,7 +5,7 @@ const E = window.CA, D = E.D, W = E.W;
 // The unlock is a Google Play purchase (js/billing.js). Play's answer, cached on the phone, is the only thing
 // that opens the whole world: not a save, not a save code, not a URL.
 const BILL = window.createBilling({ storageKey: 'cartographer.unlock', productId: 'full_unlock' });
-const VERSION = '1.1.0', SAVE_KEY = 'cartographer.v1', ATLAS_KEY = 'cartographer.v1.atlas', BACKUP_KEY = 'cartographer.v1.backup';
+const VERSION = '1.1.1', SAVE_KEY = 'cartographer.v1', ATLAS_KEY = 'cartographer.v1.atlas', BACKUP_KEY = 'cartographer.v1.backup';
 const $ = id => document.getElementById(id);
 let S = null, profile = null;
 const TYPE_NAMES = { coast: 'Coast', lang: 'Sign', sun: 'Sun', gauge: 'Rails', currency: 'Coin', flag: 'Flag', drive: 'Road', wild: 'Wild' };
@@ -190,6 +190,8 @@ function maybeMastery() { if (S.mastered && !masteryShown) { masteryShown = true
 function applySettings() { document.documentElement.classList.toggle('large', profile.settings.large); document.documentElement.classList.toggle('contrast', profile.settings.contrast); $('opt-large').checked = profile.settings.large; $('opt-contrast').checked = profile.settings.contrast; }
 function init() {
   load(); applySettings(); $('about-version').textContent = VERSION;
+  // More from AugustInnovations sits in the More (settings) tab only, never at the desk, in the atlas or the workshop.
+  $('more-card').hidden = !(window.MoreGames && window.MoreGames.render($('more-list'), 'cartographer'));
   document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
   $('desk').addEventListener('click', e => {
     const cl = e.target.closest('[data-clue]'); if (cl) { if (!S.tools.inks) { toast('Coloured inks (Workshop) shade the atlas by clue.'); return; } activeClues[cl.dataset.clue] = !activeClues[cl.dataset.clue]; renderDesk(); return; }
